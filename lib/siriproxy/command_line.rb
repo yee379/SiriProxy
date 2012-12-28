@@ -116,12 +116,14 @@ Options:
     else
       branch_opt = @branch ? "-b #{@branch}" : ""
       @branch = "master" if @branch == nil
-      puts "=== Installing latest code from git://github.com/plamoni/SiriProxy.git [#{@branch}] ==="
+      # TODO: hmm.. hardcoded git clone
+      git_loc = 'git://github.com/yee379/SiriProxy.git'
+      puts "=== Installing latest code from #{git_loc} [#{@branch}] ==="
 
 	  tmp_dir = "/tmp/SiriProxy.install." + (rand 9999).to_s.rjust(4, "0")
 
 	  `mkdir -p #{tmp_dir}`
-      puts `git clone #{branch_opt} git://github.com/plamoni/SiriProxy.git #{tmp_dir}`  if $?.exitstatus == 0
+      puts `git clone #{branch_opt} #{git_loc} #{tmp_dir}`  if $?.exitstatus == 0
       puts "=== Performing Rake Install ===" if $?.exitstatus == 0
       puts `cd #{tmp_dir} && rake install`  if $?.exitstatus == 0
       puts "=== Bundling ===" if $?.exitstatus == 0
